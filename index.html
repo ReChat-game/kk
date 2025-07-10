@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Interativo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            user-select: none;
+            background-color: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        #initialText {
+            font-size: 24px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+        
+        .message {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            pointer-events: none;
+            animation: fadeInOut 3s ease-in-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div id="initialText">clique na tela</div>
+
+    <script>
+        const initialText = document.getElementById('initialText');
+        const body = document.body;
+
+        body.addEventListener('click', function(e) {
+            // Remove o texto inicial após o primeiro clique
+            if (initialText.style.display !== 'none') {
+                initialText.style.animation = 'fadeOut 1s ease-out forwards';
+                setTimeout(() => {
+                    initialText.style.display = 'none';
+                }, 1000);
+            }
+            
+            // Cria uma nova mensagem para cada clique
+            const message = document.createElement('div');
+            message.className = 'message';
+            message.textContent = 'Vai toma no cu🖕';
+            message.style.left = (e.clientX - 50) + 'px';
+            message.style.top = (e.clientY - 20) + 'px';
+            
+            document.body.appendChild(message);
+            
+            // Remove a mensagem após a animação terminar
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
